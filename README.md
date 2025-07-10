@@ -29,6 +29,7 @@ Unlike many other ESP32-C3 boards or similar microcontrollers, this specific "Su
 ### Pictures of the Board
 
 Hier ist eine Ansicht des ESP32-C3 SuperMini Plus Boards:
+
 ![ESP32-C3 SuperMini Plus Board (Top-Ansicht)](images/board_top_view.png "Eine Nahaufnahme des ESP32-C3 SuperMini Plus")
 
 ### Pinout des Boards
