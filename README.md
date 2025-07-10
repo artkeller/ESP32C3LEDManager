@@ -17,23 +17,10 @@ The NeoPixel (WS2812B) requires a highly precise, time-sensitive serial data str
 ### The Problem:
 Directly switching between these two control methods on the same pin can lead to unexpected behavior. Our extensive testing revealed a critical issue: when the blue LED is controlled with PWM at a very high duty cycle (e.g., values above 240 on an 8-bit resolution), the NeoPixel LED can misinterpret this as a corrupted data signal and abruptly switch to full white brightness. This is due to the NeoPixel's internal watchdog timer, which defaults to white when it doesn't receive valid data for a certain period. This phenomenon is a direct result der zu hohen Tastrate des PWM-Signals, das die NeoPixel-LED triggert.
 
-Motivation for this Library:
+## Motivation for this Library - Eine "Convenience Layer" für das ESP32-C3 SuperMini Plus:
 Unlike many other ESP32-C3 boards or similar microcontrollers, this specific "Super Mini Plus" variant does not separate these LED controls onto different GPIOs, nor does it provide clear documentation on how to manage this shared resource. This library was developed through trial-and-error to provide a "convenience" layer that handles these intricate pin-state transitions and peripheral activations/deactivations automatically. It ensures that both LEDs can be controlled reliably and independently, preventing the unwanted NeoPixel "white flash" and other glitches by carefully managing the GPIO8 state and limiting the blue LED's PWM duty cycle.
 
-### Important Note: GPIO8 and I2C (SDA)
-While the ESP32-C3 features a flexible GPIO matrix that theoretically allows I2C (SDA/SCL) signals to be routed to almost any GPIO pin ,    
-
-using GPIO8 for I2C SDA on this specific board is strongly discouraged.
-
-Given that GPIO8 is already shared by both the onboard blue LED and the onboard NeoPixel, attempting to use it simultaneously for I2C communication will inevitably lead to severe conflicts, unreliable operation, and unpredictable behavior for all connected components. The RMT peripheral (used by NeoPixel) and the LEDC peripheral (used by the blue LED's PWM) both demand precise control over GPIO8, making it unsuitable for a third, concurrent peripheral like I2C.
-
-For I2C peripherals, please choose other available GPIO pins on the board. Default I2C pins for ESP32 in Arduino IDE are often GPIO21 (SDA) and GPIO22 (SCL), but other pins like GPIO4 (SDA) and GPIO5 (SCL) are also common on ESP32-C3 boards. The ESP32's GPIO matrix allows you to define I2C pins in your code using Wire.begin(SDA_PIN, SCL_PIN);.   
-
 ---
-
-### Warum diese Bibliothek? Eine "Convenience Layer" für das ESP32-C3 SuperMini Plus
-
-Das TENSTAR ESP32-C3 SuperMini Plus Board ist eine interessante Option für ESP32-C3-Projekte. aber es gibt kaum Informationen hierzu
 
 ## About the board
 
@@ -48,6 +35,15 @@ Hier ist eine Ansicht des ESP32-C3 SuperMini Plus Boards:
 
 Das Pinout des Boards ist entscheidend für die korrekte Verdrahtung:
 ![ESP32-C3 SuperMini Plus Pinout](images/board_pinout.png "Das Pinout-Diagramm des ESP32-C3 SuperMini Plus")
+
+### Important Note: GPIO8 and I2C (SDA)
+While the ESP32-C3 features a flexible GPIO matrix that theoretically allows I2C (SDA/SCL) signals to be routed to almost any GPIO pin ,    
+
+using GPIO8 for I2C SDA on this specific board is strongly discouraged.
+
+Given that GPIO8 is already shared by both the onboard blue LED and the onboard NeoPixel, attempting to use it simultaneously for I2C communication will inevitably lead to severe conflicts, unreliable operation, and unpredictable behavior for all connected components. The RMT peripheral (used by NeoPixel) and the LEDC peripheral (used by the blue LED's PWM) both demand precise control over GPIO8, making it unsuitable for a third, concurrent peripheral like I2C.
+
+For I2C peripherals, please choose other available GPIO pins on the board. Default I2C pins for ESP32 in Arduino IDE are often GPIO21 (SDA) and GPIO22 (SCL), but other pins like GPIO4 (SDA) and GPIO5 (SCL) are also common on ESP32-C3 boards. The ESP32's GPIO matrix allows you to define I2C pins in your code using Wire.begin(SDA_PIN, SCL_PIN);.   
 
 ---
 
