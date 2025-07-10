@@ -48,16 +48,16 @@ While the ESP32-C3 features a flexible GPIO matrix that theoretically allows `I2
 
 Given that GPIO8 is already shared by both the onboard `blue LED` and the onboard `NeoPixel`, attempting to use it simultaneously for `I2C` communication will inevitably lead to severe conflicts, unreliable operation, and unpredictable behavior for all connected components. The **RMT** peripheral (used by `NeoPixel)` and the **LEDC** peripheral (used by the `blue LED's` **PWM**) both demand precise control over GPIO8, making it unsuitable for a third, concurrent peripheral like I2C.
 
-For `I2C` peripherals, please choose other available GPIO pins on the board. Default I2C pins for ESP32-C3 in Arduino IDE are  GPIO8 (SDA) and GPIO9 (SCL), but other pins like GPIO4 (SDA) and GPIO5 (SCL) are also common on ESP32-C3 boards. The ESP32's GPIO matrix allows you to define I2C pins in your code using Wire.begin(SDA_PIN, SCL_PIN);.   
+For `I2C` peripherals, please choose other available GPIO pins on the board. Default `I2C` pins for ESP32-C3 in Arduino IDE are  GPIO8 (SDA) and GPIO9 (SCL), but other pins like GPIO4 (SDA) and GPIO5 (SCL) are also common on ESP32-C3 boards. The ESP32's GPIO matrix allows you to define `I2C` pins in your code using Wire.begin(SDA_PIN, SCL_PIN);.   
 
 ---
 
 ## Installation
-Download: Download this repository as a ZIP file.
+**Download:** Download this repository as a ZIP file.
 
-Arduino IDE: In the Arduino IDE, go to Sketch > Include Library > Add.ZIP Library... and select the downloaded ZIP file.
+**Arduino IDE:** In the Arduino IDE, go to Sketch > Include Library > Add.ZIP Library... and select the downloaded ZIP file.
 
-Dependencies: This library depends on the Adafruit NeoPixel library. Install it via the Arduino Library Manager (Sketch > Include Library > Manage Libraries... and search for "Adafruit NeoPixel").
+**Dependencies:** This library depends on the Adafruit NeoPixel library. Install it via the Arduino Library Manager (Sketch > Include Library > Manage Libraries... and search for "Adafruit NeoPixel").
 
 ### Board Settings:
 
