@@ -80,15 +80,15 @@ You can then use the following methods to control the LEDs:
 	ledManager.blueLEDOff();
 	ledManager.blueLEDToggle();
 	ledManager.blueLEDFade(targetBrightness, durationMs); // targetBrightness 0-240, to avoid NeoPixel triggering
-	ledManager.blueLEDSquareWave(frequencyHz, durationMs);
+	ledManager.blueLEDSquareWave(frequencyHz, durationMs); 
 ```
 
 ### NeoPixel LED Control
 ```cpp
 	ledManager.neoPixelSetColor(r, g, b);
 	ledManager.neoPixelSetColorHSV(hue, sat, val);
-	ledManager.neoPixelColorFade(durationMs);
-	ledManager.neoPixelOn(); (Sets to full white)
+	ledManager.neoPixelColorFade(durationMs); // 25% power
+	ledManager.neoPixelOn(); // Sets to full white (100% power)
 	ledManager.neoPixelOff();
 ```
 ## Example Sketches
