@@ -5,7 +5,7 @@ This repository contains an Arduino library that simplifies control of the onboa
 ## Overview
 This library provides a convenient and robust way to control the onboard blue LED and the onboard NeoPixel (WS2812B RGB LED) on the **ESP32-C3 SuperMini Plus Development Board (V2.0 Red Board)**. It abstracts away the complexities arising from both LEDs sharing the same GPIO pin (GPIO8) and the specific timing conflicts that can occur.
 
-The Unique Challenge: Shared GPIO8 and Peripherie Conflicts
+**The Unique Challenge: Shared GPIO8 and Peripherie Conflicts**
 The ESP32-C3 Super Mini Plus board, while incredibly compact and versatile, presents a unique challenge for developers: both its onboard blue LED and its onboard NeoPixel (WS2812B RGB LED) are wired to the same GPIO pin: GPIO8.
 
 This shared pin creates a complex interaction because:
