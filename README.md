@@ -69,7 +69,7 @@ Include the library in your sketch:
 
 Create an instance of the `ESP32C3LEDManager` class, specifying the shared GPIO pin (8) and the number of NeoPixels (1 for the onboard RGB LED):
 ```cpp
-ESP32C3LEDManager ledManager(8, 1);
+	ESP32C3LEDManager ledManager(8, 1);
 ```
 
 You can then use the following methods to control the LEDs:
