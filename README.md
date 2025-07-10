@@ -59,9 +59,9 @@ You can then use the following methods to control the LEDs:
 	ledManager.blueLEDOn();
 	ledManager.blueLEDOff();
 	ledManager.blueLEDToggle();
-	ledManager.blueLEDFade(targetBrightness, durationMs); (targetBrightness 0-240, to avoid NeoPixel triggering)
+	ledManager.blueLEDFade(targetBrightness, durationMs); // targetBrightness 0-240, to avoid NeoPixel triggering
 	ledManager.blueLEDSquareWave(frequencyHz, durationMs);
-	```
+```
 
 ### NeoPixel LED Control
 ```cpp
@@ -77,3 +77,4 @@ This repository includes two example sketches:
 	examples/BasicDemo/BasicDemo.ino: A simple demonstration of core functionalities.
 
 	examples/FullDemo/FullDemo.ino: A comprehensive test that cycles through all available methods for both LEDs to demonstrate their independent operation despite sharing GPIO8.
+ 
