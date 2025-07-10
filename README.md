@@ -16,7 +16,7 @@ The NeoPixel (WS2812B) requires a highly precise, time-sensitive serial data str
 ### The Problem:
 Directly switching between these two control methods on the same pin can lead to unexpected behavior. Our extensive testing revealed a critical issue: when the blue LED is controlled with PWM at a very high duty cycle (e.g., values above 240 on an 8-bit resolution), the NeoPixel LED can misinterpret this as a corrupted data signal and abruptly switch to full white brightness (RGB:255,255,255). This is due to the NeoPixel's internal watchdog timer, which defaults to white when it doesn't receive valid data for a certain period. This phenomenon is a direct result of the excessive sampling rate of the PWM signal that triggers the NeoPixel LED.
 
-### Motivation for this Library - Eine "Convenience Layer" für das ESP32-C3 SuperMini Plus:
+### Motivation for this Library - A “Convenience Layer” for the ESP32-C3 SuperMini Plus:
 Unlike many other ESP32-C3 boards or similar microcontrollers, this specific "Super Mini Plus" variant does not separate these LED controls onto different GPIOs, nor does it provide clear documentation on how to manage this shared resource. This library was developed through trial-and-error to provide a "convenience" layer that handles these intricate pin-state transitions and peripheral activations/deactivations automatically. It ensures that both LEDs can be controlled reliably and independently, preventing the unwanted NeoPixel "white flash" and other glitches by carefully managing the GPIO8 state and limiting the blue LED's PWM duty cycle.
 
 ---
