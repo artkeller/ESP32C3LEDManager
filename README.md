@@ -27,7 +27,7 @@ Unlike many other ESP32-C3 boards or similar microcontrollers, this specific "Su
 
 ### Picture of the circuit board:
 
-Here is a top view of the ESP32-C3 SuperMini Plus board:
+Here is a top view of this specila **ESP32-C3 SuperMini Plus** board:
 
 ![ESP32-C3 SuperMini Plus Board (Top view)](images/board_top_view.png "A close-up of the ESP32-C3 SuperMini Plus")
 
