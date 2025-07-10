@@ -1,5 +1,4 @@
-# ESP32C3 SuperMini Plus LED Manager     <i class="fas fa-camera"></i> 
-
+# ![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png) ESP32C3 SuperMini Plus LED Manager     
 
 This repository contains an Arduino library that simplifies control of the onboard blue LED and RGB NeoPixel LED on the **ESP32-C3 SuperMini Plus** board.
 
