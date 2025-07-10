@@ -25,21 +25,20 @@ Unlike many other ESP32-C3 boards or similar microcontrollers, this specific "Su
 
 [Fügen Sie hier eine Beschreibung des Boards ein, z.B. "Das TENSTAR ESP32-C3 SuperMini Plus ist ein kompaktes Entwicklungsboard mit einem ESP32-C3-Chip..."]
 
-### Pictures of the Board
+### Picture of the circuit board:
 
-Hier ist eine Ansicht des ESP32-C3 SuperMini Plus Boards:
+Here is a top view of the ESP32-C3 SuperMini Plus board:
 
-![ESP32-C3 SuperMini Plus Board (Top-Ansicht)](images/board_top_view.png "Eine Nahaufnahme des ESP32-C3 SuperMini Plus")
+![ESP32-C3 SuperMini Plus Board (Top view)](images/board_top_view.png "A close-up of the ESP32-C3 SuperMini Plus")
 
-### Pinout des Boards
+### Pinout of the Board:
 
-Das Pinout des Boards ist entscheidend für die korrekte Verdrahtung:
-![ESP32-C3 SuperMini Plus Pinout](images/board_pinout.png "Das Pinout-Diagramm des ESP32-C3 SuperMini Plus")
+Since no pin assignment has been published for this special (red) circuit board, here is a picture of the standard circuit board, which is essentially identical. However, special knowledge is required to ensure correct functioning, in order to use the standard pin assignment of the circuit board correctly or not at all:
+
+![ESP32-C3 SuperMini Plus Pinout](images/board_pinout.png "The pinout diagram of the ESP32-C3 SuperMini Plus")
 
 ### Important Note: GPIO8 and I2C (SDA)
-While the ESP32-C3 features a flexible GPIO matrix that theoretically allows I2C (SDA/SCL) signals to be routed to almost any GPIO pin ,    
-
-using GPIO8 for I2C SDA on this specific board is strongly discouraged.
+While the ESP32-C3 features a flexible GPIO matrix that theoretically allows I2C (SDA/SCL) signals to be routed to almost any GPIO pin, using GPIO8 for I2C SDA on this specific board is strongly discouraged.
 
 Given that GPIO8 is already shared by both the onboard blue LED and the onboard NeoPixel, attempting to use it simultaneously for I2C communication will inevitably lead to severe conflicts, unreliable operation, and unpredictable behavior for all connected components. The RMT peripheral (used by NeoPixel) and the LEDC peripheral (used by the blue LED's PWM) both demand precise control over GPIO8, making it unsuitable for a third, concurrent peripheral like I2C.
 
