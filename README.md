@@ -1,4 +1,4 @@
-#ESP32C3 SuperMini Plus LED Manager     
+# ESP32C3 SuperMini Plus LED Manager     
 
 This repository contains an Arduino library that simplifies control of the onboard blue LED and RGB NeoPixel LED on the **ESP32-C3 SuperMini Plus** board.
 
