@@ -1,4 +1,4 @@
-# ESP32C3 Super Mini Plus LED Control Library 
+# ESP32C3 SuperMini Plus LED Manager 
 
 ESP32C3 LED Manager Library for TENSTAR ESP32-C3 SuperMini Plus
 
