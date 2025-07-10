@@ -29,6 +29,28 @@ Given that GPIO8 is already shared by both the onboard blue LED and the onboard 
 
 For I2C peripherals, please choose other available GPIO pins on the board. Default I2C pins for ESP32 in Arduino IDE are often GPIO21 (SDA) and GPIO22 (SCL), but other pins like GPIO4 (SDA) and GPIO5 (SCL) are also common on ESP32-C3 boards. The ESP32's GPIO matrix allows you to define I2C pins in your code using Wire.begin(SDA_PIN, SCL_PIN);.   
 
+---
+
+### Warum diese Bibliothek? Eine "Convenience Layer" für das ESP32-C3 SuperMini Plus
+
+Das TENSTAR ESP32-C3 SuperMini Plus Board ist eine interessante Option für ESP32-C3-Projekte. aber es gibt kaum Informationen hierzu
+
+## About the board
+
+[Fügen Sie hier eine Beschreibung des Boards ein, z.B. "Das TENSTAR ESP32-C3 SuperMini Plus ist ein kompaktes Entwicklungsboard mit einem ESP32-C3-Chip..."]
+
+### Pictures of the Board
+
+Hier ist eine Ansicht des ESP32-C3 SuperMini Plus Boards:
+![ESP32-C3 SuperMini Plus Board (Top-Ansicht)](images/board_top_view.png "Eine Nahaufnahme des ESP32-C3 SuperMini Plus")
+
+### Pinout des Boards
+
+Das Pinout des Boards ist entscheidend für die korrekte Verdrahtung:
+![ESP32-C3 SuperMini Plus Pinout](images/board_pinout.png "Das Pinout-Diagramm des ESP32-C3 SuperMini Plus")
+
+---
+
 ## Installation
 Download: Download this repository as a ZIP file.
 
