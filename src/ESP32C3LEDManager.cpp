@@ -11,8 +11,8 @@ ESP32C3LEDManager::ESP32C3LEDManager(int sharedPin, int numPixels)
     digitalWrite(_sharedPin, LOW);
 
     // NeoPixel initialisieren (konfiguriert RMT für den gemeinsamen Pin).
-    _initialized = _strip.begin();  // Begin gibt bool zurück
-    if(_initialized) {
+    _stripInitialized  = _strip.begin();  // Begin gibt bool zurück
+    if(_stripInitialized ) {
         _strip.clear();     // Alle Pixel auf 0 setzen (optional, aber sauberer)
         _strip.show();      // Signal an LEDs senden (alle AUS)
     }
