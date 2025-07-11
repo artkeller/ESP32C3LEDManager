@@ -18,7 +18,7 @@ ESP32C3LEDManager::ESP32C3LEDManager(int sharedPin, int numPixels)
     }
 }
 
-bool ESP32C3LEDManager::isInitialized() const {
+bool ESP32C3LEDManager::neoPixelIsInitialized() const {
     return _stripInitialized;
 }
 
