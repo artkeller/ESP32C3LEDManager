@@ -3,7 +3,7 @@
 [![Arduino Library Manager](https://img.shields.io/static/v1?label=Arduino&message=v2.1.0&logo=arduino&logoColor=white&color=blue)]()
 [![Release](https://img.shields.io/static/v1?label=Release&message=v1.0.0&logo=arduino&logoColor=white&color=blue)]()
 
-This repository contains an Arduino library that simplifies control of the onboard blue LED and RGB NeoPixel LED on the **ESP32-C3 SuperMini Plus** board.
+This repository contains an Arduino library that simplifies control of the onboard `blue LED` and RGB `NeoPixel` LED on the **ESP32-C3 SuperMini Plus** board.
 
 ## Overview
 This library provides a convenient and robust way to control the onboard `blue LED` and the onboard `NeoPixel` (WS2812B RGB LED) on the **ESP32-C3 SuperMini Plus Development Board (V2.0 Red Board)**. It abstracts away the complexities arising from both LEDs sharing the same GPIO pin (GPIO8) and the specific timing conflicts that can occur.
