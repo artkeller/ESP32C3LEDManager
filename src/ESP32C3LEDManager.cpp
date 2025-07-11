@@ -7,7 +7,7 @@ ESP32C3LEDManager::ESP32C3LEDManager(int sharedPin, int numPixels)
     // Initialer Setup im Konstruktor
     // Sicherstellen, dass der gemeinsame Pin initial als digitaler Ausgang konfiguriert und AUS ist.
     // Die blaue LED ist NICHT invertiert: LOW = AUS, HIGH = AN.
-    pinMode(_sharedPin, OUTPUT);
+    pinMode(_sharedPin, OUTPUT);  
     digitalWrite(_sharedPin, LOW);
 
     // NeoPixel initialisieren (konfiguriert RMT für den gemeinsamen Pin).
@@ -19,7 +19,7 @@ ESP32C3LEDManager::ESP32C3LEDManager(int sharedPin, int numPixels)
 }
 
 bool ESP32C3LEDManager::isInitialized() const {
-    return _initialized;
+    return _stripInitialized;
 }
 
 // Interne Helferfunktion: Bereitet den Pin für NeoPixel-Operationen vor
