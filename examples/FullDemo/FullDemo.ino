@@ -12,7 +12,7 @@ void setup() {
   delay(1000); // Eine kurze Verzögerung, um der seriellen Verbindung Zeit zu geben.
 
   //  DEBUG
-  if(!ledManager.isInitialized()) {
+  if(!ledManager.neoPixelIsInitialized()) {
     Serial.println("⚠️ NeoPixel-Init fehlgeschlagen! - STOP");
     while (1);
   }
