@@ -43,11 +43,14 @@ public:
     void neoPixelOn();
     // Schaltet die NeoPixel-LED aus.
     void neoPixelOff();
+    // DEBUG INFO
+    bool neoPixelIsInitialized(); 
 
 private:
     int _sharedPin;
     int _numPixels;
     Adafruit_NeoPixel _strip; // Das Adafruit NeoPixel Objekt als Member
+    bool _stripInitialized = false; // DEBUG INFO
 
     // LEDC-Parameter für die blaue LED (vom Benutzer optimiert)
     const int _blueLEDFreq = 1000;     // 1 kHz Frequenz
