@@ -11,15 +11,15 @@ ESP32C3LEDManager::ESP32C3LEDManager(int sharedPin, int numPixels)
     digitalWrite(_sharedPin, LOW);
 
     // NeoPixel initialisieren (konfiguriert RMT für den gemeinsamen Pin).
-    if (!_strip.begin()) {
-        Serial.println("Fehler bei NeoPixel-Init!");
-    } else {
-        Serial.println("NeoPixel-Init! OK");
+    _initialized = _strip.begin();  // Begin gibt bool zurück
+    if(_initialized) {
+        _strip.clear();     // Alle Pixel auf 0 setzen (optional, aber sauberer)
+        _strip.show();      // Signal an LEDs senden (alle AUS)
     }
+}
 
-    //_strip.begin();     // Pin wird hier automatisch konfiguriert (RMT)
-    _strip.clear();     // Alle Pixel auf 0 setzen (optional, aber sauberer)
-    _strip.show();      // Signal an LEDs senden (alle AUS)
+bool ESP32C3LEDManager::isInitialized() const {
+    return _initialized;
 }
 
 // Interne Helferfunktion: Bereitet den Pin für NeoPixel-Operationen vor
