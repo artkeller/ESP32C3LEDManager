@@ -44,7 +44,7 @@ public:
     // Schaltet die NeoPixel-LED aus.
     void neoPixelOff();
     // DEBUG INFO
-    bool neoPixelIsInitialized(); 
+    bool neoPixelIsInitialized() const;
 
 private:
     int _sharedPin;
