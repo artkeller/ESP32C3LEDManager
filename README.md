@@ -41,7 +41,7 @@ The **ESP32-C3 SuperMini Plus** is a highly integrated, ultra-compact developmen
 | USB                              | USB-C |
 | GPIOs                            | 11 usable pins (PWM, 6x ADC, 2x UART, 1x SPI, 1x I2C) |
 | Extremely low power consumption  | Deep sleep power consumption of approx. 43 µA |
-| On-board LED                     | Blue light GPIO 8, RGB LED |
+| On-board LED                     | Blue light GPIO 8, **RGB LED** |
 | Dimensions                       | 22.52 x 18 mm |
 | Weight                           | 1.7 g |
 
@@ -53,7 +53,7 @@ Here is a top view of this specila **ESP32-C3 SuperMini Plus** board:
 
 ### Pinout of the Board:
 
-After extensive research, a valid pin assignment for the special (red) circuit board was finally identified. It corresponds to the external assignment of the standard circuit board. However, the specific functional meaning of individual pins is not documented. Without a detailed understanding of the circuit, precise use cannot be guaranteed. In order to use the standard pin assignment correctly – or to deviate from it in a targeted manner – further knowledge of the special features is required.
+Following extensive research, a valid pin assignment was finally identified for the 'special red circuit board'. This corresponds to the external pin assignment of the standard circuit board. However, the specific function of each pin is undocumented. Without a detailed understanding of the circuit, precise use cannot be guaranteed. In order to use the pin assignment correctly or deviate from it in a targeted manner, further knowledge of special features such as strapping and default I2C competitiveness with LEDs and BOOT buttons is required. However, we only address the corresponding GPIO8 differences between the ESP32C3 SuperMini Plus and the ESP32C3 SuperMini board here.
 
 ![ESP32-C3 SuperMini Plus Pinout](images/board_pinout.png "The pinout diagram of the ESP32-C3 SuperMini Plus")
 
