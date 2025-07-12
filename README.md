@@ -29,7 +29,7 @@ Well, it's quite a lot of effort for such a “trivial” problem, but it took s
 
 Both LEDs, as in our case, require two different protocols on one “bus” pin, which requires some explanation. The following illustration shows the timing of a single Neopixel LED and clearly shows that the 24 bits are transmitted at 800 kHz in 30 us. The inertia of the human eye prevents us from noticing this “burst” in the blue LED.
 
-![Neopixel timing protocol for one pixel](images/WS2812B_single_pixel_timing.png "Neopixel timing protocol for one pixel")
+![Neopixel timing protocol for one pixel](images//WS2812B_single_pixel_timing.png "Neopixel timing protocol for one pixel")
 
 ---
 
