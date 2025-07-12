@@ -57,6 +57,8 @@ The **ESP32-C3 SuperMini Plus** is a highly integrated, ultra-compact developmen
 | Dimensions                       | 22.52 x 18 mm |
 | Weight                           | 1.7 g |
 
+An IPXE antenna can be connected.
+
 ### Picture of the circuit board:
 
 Here is a top view of this specila **ESP32-C3 SuperMini Plus** board:
