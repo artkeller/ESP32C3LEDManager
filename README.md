@@ -27,10 +27,11 @@ Well, it's quite a lot of effort for such a “trivial” problem, but it took s
 
 ### A brief explanation of why the implementation works reliably:
 
-Both LEDs, as in our case, require two different protocols on one “bus” pin, which requires some explanation. The following illustration shows the timing of a single Neopixel LED and clearly shows that the 24 bits are transmitted at 800 kHz in 30 us. The inertia of the human eye prevents us from noticing this “burst” in the blue LED.
-
+Both LEDs, as in our case, require two different protocols on one GPIO0 “bus” pin, which requires some explanation. The following illustration shows the timing of a single `Neopixel` RGB LED and clearly shows that the 24 bits are transmitted at 800 kHz in ~30 us. The inertia of the human eye prevents us from noticing this “burst” in the `blue LED`.
 
 ![Neopixel timing protocol for one pixel](images//WS2812B_single_pixel_timing.png "Neopixel timing protocol for one pixel")
+
+Anders ist das bei der blauen led, die neben normalem ON/OFF auch PWM gesteurte helligkeitsunterscheidle darstellen können soll. hier kommt es zu üebrraschenden konflikten mit der neopixle led, wenn hohe tastraten selbst bei niedrigen freqzenzen von 1 kHz ein "fehlverständnis" des eigentlich hochfreqqunten neopixel 24bit potolkolls auslösen können. Daher wird, wie in der folgenden Aabbildung dargestellt, das PWM tastverhältnis unterhalb der schwelle gehalten, die ein HIGH-Bit repräsentieren. 
 
 ---
 
