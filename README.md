@@ -29,9 +29,12 @@ Well, it's quite a lot of effort for such a “trivial” problem, but it took s
 
 Both LEDs, as in our case, require two different protocols on one GPIO0 “bus” pin, which requires some explanation. The following illustration shows the timing of a single `Neopixel` RGB LED and clearly shows that the 24 bits are transmitted at 800 kHz in ~30 us. The inertia of the human eye prevents us from noticing this “burst” in the `blue LED`.
 
-![Neopixel timing protocol for one pixel](images//WS2812B_single_pixel_timing.png "Neopixel timing protocol for one pixel")
+![Neopixel timing protocol for one pixel](images/WS2812B_single_pixel_timing.png "Neopixel timing protocol for one pixel")
 
-Anders ist das bei der blauen led, die neben normalem ON/OFF auch PWM gesteurte helligkeitsunterscheidle darstellen können soll. hier kommt es zu üebrraschenden konflikten mit der neopixle led, wenn hohe tastraten selbst bei niedrigen freqzenzen von 1 kHz ein "fehlverständnis" des eigentlich hochfreqqunten neopixel 24bit potolkolls auslösen können. Daher wird, wie in der folgenden Aabbildung dargestellt, das PWM tastverhältnis unterhalb der schwelle gehalten, die ein HIGH-Bit repräsentieren. 
+The situation is different with the “blue LED,” which, in addition to normal ON/OFF, is also supposed to be able to display PWM-controlled brightness distinctions. Here, surprising conflicts arise with the Neopixel LED when high switching rates, even at low frequencies of 1 kHz, can trigger a “misunderstanding” of the actually high-frequency Neopixel 24-bit potokoll. Therefore, as shown in the following diagram, the PWM duty cycle is kept below the threshold of ~90% to avoid triggering a HIGH bit in the Neopixel LED. It should also be mentioned that this library also implements the ON/OFF states using PWM.
+
+![Blue LED_PWM timing](images/Blue_LED_PWM_timing.png "Blue LED_PWM timing")
+
 
 ---
 
