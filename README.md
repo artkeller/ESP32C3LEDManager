@@ -65,7 +65,7 @@ An IPXE antenna can be connected.
 
 Here is a top view of this special **ESP32-C3 SuperMini Plus** board:
 
-![ESP32-C3 SuperMini Plus Board (Top view)](images/board_top_view.png "A close-up of the ESP32-C3 SuperMini Plus")
+![ESP32-C3 SuperMini Plus Board (Top view)](images/ESP32C3SuperMiniPlus.png "A close-up of the ESP32-C3 SuperMini Plus")
 
 ### Pinout of the Board:
 
