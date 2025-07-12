@@ -41,7 +41,9 @@ It should also be mentioned that this library also implements the ON/OFF states 
 
 ## About the board
 
-The **ESP32-C3 SuperMini Plus** is a highly integrated, ultra-compact development board based on the ESP32-C3 chip from Espressif Systems. It combines performance with minimal space requirements and was developed specifically for IoT applications with limited space. The following table was published by a distributor in which the `RGB LED` (`Neopixel`) is only mentioned very briefly.
+The **ESP32-C3 SuperMini Plus** is a highly integrated, ultra-compact development board based on the ESP32-C3 chip from Espressif Systems. It combines performance with minimal space requirements and was developed specifically for IoT applications with limited space. 
+
+The following table was published by a distributor in which the `RGB LED` (`Neopixel`) is only mentioned very briefly.
 
 | Parameter 			   | Specification |
 | :------------------------------- | :------------ |
