@@ -31,7 +31,9 @@ Both LEDs, as in our case, require two different protocols on one GPIO0 “bus�
 
 ![Neopixel timing protocol for one pixel](images/WS2812B_single_pixel_timing.png "Neopixel timing protocol for one pixel")
 
-The situation is different with the “blue LED,” which, in addition to normal ON/OFF, is also supposed to be able to display PWM-controlled brightness distinctions. Here, surprising conflicts arise with the Neopixel LED when high switching rates, even at low frequencies of 1 kHz, can trigger a “misunderstanding” of the actually high-frequency Neopixel 24-bit potokoll. Therefore, as shown in the following diagram, the PWM duty cycle is kept below the threshold of ~90% to avoid triggering a HIGH bit in the Neopixel LED. It should also be mentioned that this library also implements the ON/OFF states using PWM.
+The situation is different with the `blue LED`, as it is intended to display PWM-controlled brightness differences in addition to normal on/off operation. This causes unexpected conflicts with the `Neopixel` LED at high PWM duty cycles, even at low frequencies of 1 kHz, which leads to a “misinterpretation” of the Neopixel LED of what is actually a high-frequency 24-bit protocol. Therefore, as shown in the following figure, the PWM duty cycle is kept below the threshold value of ~90% in this implementation to avoid triggering a HIGH bit in the Neopixel LED. 
+
+It should also be mentioned that this library also implements the ON/OFF states using PWM.
 
 ![Blue LED_PWM timing](images/Blue_LED_PWM_timing.png "Blue LED_PWM timing")
 
