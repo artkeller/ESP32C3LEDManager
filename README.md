@@ -31,6 +31,20 @@ Well, it's quite a lot of effort for such a “trivial” problem, but it took s
 
 The ESP32-C3 SuperMini Plus is a highly integrated, ultra-compact development board based on the ESP32-C3 chip from Espressif Systems. It combines performance with minimal space requirements and has been specially developed for space-constrained IoT applications.
 
+| Parameter 			   | Specification |
+| +------------------------------- | +------------ |
+| Microcontroller                  | ESP32-C3 (RISC-V Single-Core, 160 MHz) |
+| Chip model                       | ESP32C3FN4 |
+| Wireless                         | 2.4 GHz, IEEE 802.11 b/g/n (Wi-Fi 4) |
+| Bluetooth                        | 5.0 LE (Low Energy) |
+| Memory                           | 400kb SRAM, 384kb ROM, 4MB Flash |
+| USB                              | USB-C |
+| GPIOs                            | 11 usable pins (PWM, 6x ADC, 2x UART, 1x SPI, 1x I2C) |
+| Extremely low power consumption  | Deep sleep power consumption of approx. 43 µA |
+| On-board LED                     | Blue light GPIO 8, RGB LED |
+| Dimensions                       | 22.52 x 18 mm |
+| Weight                           | 1.7 g |
+
 ### Picture of the circuit board:
 
 Here is a top view of this specila **ESP32-C3 SuperMini Plus** board:
