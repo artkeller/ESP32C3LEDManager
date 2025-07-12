@@ -29,7 +29,7 @@ Well, it's quite a lot of effort for such a “trivial” problem, but it took s
 
 ## About the board
 
-The ESP32-C3 SuperMini Plus is a highly integrated, ultra-compact development board based on the ESP32-C3 chip from Espressif Systems. It combines performance with minimal space requirements and has been specially developed for space-constrained IoT applications.
+The **ESP32-C3 SuperMini Plus** is a highly integrated, ultra-compact development board based on the ESP32-C3 chip from Espressif Systems. It combines performance with minimal space requirements and was developed specifically for IoT applications with limited space. The following table was published by a distributor in which the `RGB LED` (`Neopixel`) is only mentioned very briefly.
 
 | Parameter 			   | Specification |
 | :------------------------------- | :------------ |
@@ -53,9 +53,11 @@ Here is a top view of this specila **ESP32-C3 SuperMini Plus** board:
 
 ### Pinout of the Board:
 
-Since no pin assignment has been published for this special (red) circuit board, here is a picture of the standard circuit board, which is essentially identical. However, special knowledge is required to ensure correct functioning, in order to use the standard pin assignment of the circuit board correctly or not at all:
+After extensive research, a valid pin assignment for the special (red) circuit board was finally identified. It corresponds to the external assignment of the standard circuit board. However, the specific functional meaning of individual pins is not documented. Without a detailed understanding of the circuit, precise use cannot be guaranteed. In order to use the standard pin assignment correctly – or to deviate from it in a targeted manner – further knowledge of the special features is required.
 
 ![ESP32-C3 SuperMini Plus Pinout](images/board_pinout.png "The pinout diagram of the ESP32-C3 SuperMini Plus")
+
+Unlike the standard board, the `blue LED` is not connected in reverse here. This alone would not be a problem, but the GPIO8 in question is also used as a “strapping pin” and is held at HIGH via a pull-up resistor to support the boot process correctly. This causes a small quiescent current to flow through the LED, which may start to glow slightly in reset mode or during flashing. On the standard board, GPIO8 is also held HIGH, but no significant current flows through the inverted LED because GPIO8 is configured as an input in these modes. I hope this insights are helpful to others.
 
 ### Important Note: GPIO8 and I2C (SDA)
 While the ESP32-C3 features a flexible GPIO matrix that theoretically allows `I2C` (SDA/SCL) signals to be routed to almost any GPIO pin, using the default GPIO8 for `I2C SDA` on this specific board is strongly discouraged.
