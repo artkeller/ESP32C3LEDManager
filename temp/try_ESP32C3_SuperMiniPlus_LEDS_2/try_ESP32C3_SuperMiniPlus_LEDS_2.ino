@@ -1,5 +1,6 @@
 #include <Adafruit_NeoPixel.h>  // Bibliothek für NeoPixel-LEDs
 
+
 // Definitionen für die LEDs
 #define NEOPIXEL_PIN 8  // GPIO-Pin für die NeoPixel-LED (und die blaue LED)
 #define BLUE_LED_PIN 8  // GPIO-Pin für die blaue LED (und die NeoPixel-LED)
