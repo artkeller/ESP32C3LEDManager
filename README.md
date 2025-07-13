@@ -78,7 +78,7 @@ Unlike the standard board, the `blue LED` is not connected in reverse here. This
 ### Important Note: GPIO8 and I2C (SDA)
 While the ESP32-C3 features a flexible GPIO matrix that theoretically allows `I2C` (SDA/SCL) signals to be routed to almost any GPIO pin, using the default GPIO8 for `I2C SDA` on this specific board is strongly discouraged.
 
-Given that GPIO8 is already shared by both the onboard `blue LED` and the onboard `NeoPixel`, attempting to use it simultaneously for `I2C` communication will inevitably lead to severe conflicts, unreliable operation, and unpredictable behavior for all connected components. The **RMT** peripheral (used by `NeoPixel)` and the **LEDC** peripheral (used by the `blue LED's` **PWM**) both demand precise control over GPIO8, making it unsuitable for a third, concurrent peripheral like I2C.
+Given that GPIO8 is already shared by both the onboard `blue LED` and the onboard `NeoPixel`, attempting to use it simultaneously for `I2C` communication will inevitably lead to severe conflicts, unreliable operation, and unpredictable behavior for all connected components. The **RMT** peripheral (used by `NeoPixel)` and the **LEDC** peripheral (used by the `blue LED's` **PWM**) both demand precise control over GPIO8, making it unsuitable for a third, concurrent peripheral like `I2C`.
 
 For `I2C` peripherals, please choose other available GPIO pins on the board. Default `I2C` pins for ESP32-C3 in Arduino IDE are  GPIO8 (SDA) and GPIO9 (SCL), but other pins like GPIO4 (SDA) and GPIO5 (SCL) are also common on ESP32-C3 boards. The ESP32's GPIO matrix allows you to define `I2C` pins in your code using Wire.begin(SDA_PIN, SCL_PIN);.   
 
