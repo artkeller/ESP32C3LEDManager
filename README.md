@@ -84,9 +84,6 @@ For `I2C` peripherals, please choose other available GPIO pins on the board. Def
 
 Refer to the [ESP32-C3 Datasheet, Table 2-7: Peripheral Pin Assignment (page 23)](https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf) for the official GPIO capabilities and default peripheral mappings.
 
-### Criticism of the board design:
-The extremely compact design is undoubtedly an attractive solution for many applications. However, there is no apparent reason why the two LEDs were placed on GPIOs that are also needed for other functions. Assigning them to unused (internal) GPIOs would have ruled out potential conflicts of use from the outset—other board designs show that this is possible.
-
 ---
 
 ## Installation
