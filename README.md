@@ -84,8 +84,8 @@ For `I2C` peripherals, please choose other available GPIO pins on the board. Def
 
 Refer to the [ESP32-C3 Datasheet, Table 2-7: Peripheral Pin Assignment (page 23)](https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf) for the official GPIO capabilities and default peripheral mappings.
 
-About the chip
-Wie in der abbildung erkennbar, sind die ESP32C3 SuperMini Boards eine exakte Abbildung des ESP32C3 Formfaktors. Es gibt einfach nicht mehr pins, die für für LEDS genutz werden könnten.
+### About the chip design:
+The ESP32-C3 SuperMini boards adopt the GPIO layout of the ESP32-C3 chip without modification. The limited number of pins shown in the figure is therefore not a design flaw, but results directly from the compact system concept of the chip. For developers, this means that shared pin usage and intelligent resource management are part of the working environment. Anyone working with this form factor should be prepared to combine functions in a targeted manner and control them via software.
 
 ![ESP32-C3 SuperMini Plus Pins](images/ESP32C3_Pins-2.png "ESP32-C3 SuperMini Pins")
 
