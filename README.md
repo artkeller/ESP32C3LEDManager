@@ -82,6 +82,8 @@ Given that GPIO8 is already shared by both the onboard `blue LED` and the onboar
 
 For `I2C` peripherals, please choose other available GPIO pins on the board. Default `I2C` pins for ESP32-C3 in Arduino IDE are  GPIO8 (SDA) and GPIO9 (SCL), but other pins like GPIO4 (SDA) and GPIO5 (SCL) are also common on ESP32-C3 boards. The ESP32's GPIO matrix allows you to define `I2C` pins in your code using Wire.begin(SDA_PIN, SCL_PIN);.   
 
+Refer to the [ESP32-C3 Datasheet, Table 2-7: Peripheral Pin Assignment (page 23)](https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf) for the official GPIO capabilities and default peripheral mappings.
+
 ### Criticism of the board design:
 The extremely compact design is undoubtedly an attractive solution for many applications. However, there is no apparent reason why the two LEDs were placed on GPIOs that are also needed for other functions. Assigning them to unused (internal) GPIOs would have ruled out potential conflicts of use from the outset—other board designs show that this is possible.
 
