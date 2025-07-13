@@ -71,7 +71,7 @@ Here you can see a front and rear view of this special **ESP32-C3 SuperMini Plus
 
 Following extensive research, a valid pin assignment was finally identified for the 'special red circuit board'. This corresponds to the external pin assignment of the standard circuit board. However, the specific function of each pin is undocumented. Without a detailed understanding of the circuit, precise use cannot be guaranteed. In order to use the pin assignment correctly or deviate from it in a targeted manner, further knowledge of special features such as strapping and default I2C competitiveness with LEDs and BOOT buttons is required. However, we only address the corresponding GPIO8 differences between the ESP32C3 SuperMini Plus and the ESP32C3 SuperMini board here.
 
-![ESP32-C3 SuperMini Plus Pinout](images/ESP32C3SuperMinirotPinout-2.png "The pinout diagram of the ESP32-C3 SuperMini Plus")
+![ESP32-C3 SuperMini Plus Pinout](images/ESP32C3SuperMinirotPinout-3.png "The pinout diagram of the ESP32-C3 SuperMini Plus")
 
 Unlike the standard board, the `blue LED` is not connected in reverse here. This alone would not be a problem, but the GPIO8 in question is also used as a “strapping pin” and is held at HIGH via a pull-up resistor to support the boot process correctly. This causes a small quiescent current to flow through the LED, which may start to glow slightly in reset mode or during flashing. On the standard board, GPIO8 is also held HIGH, but no significant current flows through the inverted LED because GPIO8 is configured as an input in these modes. I hope this insights are helpful to others.
 
