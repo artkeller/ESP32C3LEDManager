@@ -67,6 +67,8 @@ Here you can see a front and rear view of this special **ESP32-C3 SuperMini Plus
 
 ![ESP32-C3 SuperMini Plus Board (Top view)](images/ESP32C3SuperMiniPlus-2.png "A close-up of the ESP32-C3 SuperMini Plus")
 
+Note: In addition to the red boards, there are also pink and black boards with an identical layout.
+
 ### Pinout of the Board:
 
 Following extensive research, a valid pin assignment was finally identified for the 'special red circuit board'. This corresponds to the external pin assignment of the standard circuit board. However, the specific function of each pin is undocumented. Without a detailed understanding of the circuit, precise use cannot be guaranteed. To use the pin assignment as standard or deviate from it in a specific way, further knowledge of special features such as strapping and standard I2C competition with LEDs and BOOT conditions or the control of ROM message output is required. However, we only address the corresponding GPIO8 differences between the ESP32C3 SuperMini Plus and the ESP32C3 SuperMini board here.
@@ -143,3 +145,4 @@ This repository includes two example sketches:
 
 	examples/FullDemo/FullDemo.ino: A comprehensive test that cycles through all available methods for both LEDs to demonstrate their independent operation despite sharing GPIO8.
  
+
