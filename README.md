@@ -1,5 +1,6 @@
 # ESP32-C3 SuperMini Plus LED Manager 
 
+[![CRA Status](https://img.shields.io/badge/CRA-Exempt%20(pure%20OSS)-informational)](./CRA-EXEMPTION.md)
 [![Arduino Library Manager](https://img.shields.io/static/v1?label=Arduino&message=v2.1.0&logo=arduino&logoColor=white&color=blue)]()
 [![Release](https://img.shields.io/static/v1?label=Release&message=v0.5.0&logo=arduino&logoColor=white&color=blue)]()
 
@@ -145,4 +146,5 @@ This repository includes two example sketches:
 
 	examples/FullDemo/FullDemo.ino: A comprehensive test that cycles through all available methods for both LEDs to demonstrate their independent operation despite sharing GPIO8.
  
+
 
