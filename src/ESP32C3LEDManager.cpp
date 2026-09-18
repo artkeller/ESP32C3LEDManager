@@ -22,10 +22,45 @@ bool ESP32C3LEDManager::neoPixelIsInitialized() const {
     return _stripInitialized;
 }
 
+// --- LEDC-Kompatibilitätsschicht (Core >= 3.0 vs. < 3.0) ---
+// Siehe PLATFORMIO.md für die ausführliche Erklärung, warum diese Weiche
+// notwendig ist (insb. für PlatformIO-Standardumgebungen mit Core < 3.0).
+#if ESP32C3LEDMANAGER_NEW_LEDC_API
+// Core >= 3.0 (ESP-IDF 5.1+): pin-basierte API, Kanal wird automatisch verwaltet.
+void ESP32C3LEDManager::_ledcAttachBlue() {
+    ledcAttach(_sharedPin, _blueLEDFreq, _blueLEDResolution);
+}
+void ESP32C3LEDManager::_ledcWriteBlue(uint32_t duty) {
+    ledcWrite(_sharedPin, duty);
+}
+uint32_t ESP32C3LEDManager::_ledcReadBlue() {
+    return ledcRead(_sharedPin);
+}
+void ESP32C3LEDManager::_ledcDetachBlue() {
+    ledcDetach(_sharedPin);
+}
+#else
+// Core < 3.0 (ESP-IDF 4.4, z.B. offizielles PlatformIO-Registry-Package):
+// klassische, kanalbasierte API — Kanal muss explizit reserviert werden.
+void ESP32C3LEDManager::_ledcAttachBlue() {
+    ledcSetup(_blueLEDChannel, _blueLEDFreq, _blueLEDResolution);
+    ledcAttachPin(_sharedPin, _blueLEDChannel);
+}
+void ESP32C3LEDManager::_ledcWriteBlue(uint32_t duty) {
+    ledcWrite(_blueLEDChannel, duty);
+}
+uint32_t ESP32C3LEDManager::_ledcReadBlue() {
+    return ledcRead(_blueLEDChannel);
+}
+void ESP32C3LEDManager::_ledcDetachBlue() {
+    ledcDetachPin(_sharedPin);
+}
+#endif
+
 // Interne Helferfunktion: Bereitet den Pin für NeoPixel-Operationen vor
 void ESP32C3LEDManager::_activateNeoPixelMode() {
     // LEDC-Peripherie vom Pin trennen, falls aktiv.
-    ledcDetach(_sharedPin);
+    _ledcDetachBlue();
     // Sicherstellen, dass der Pin als digitaler Ausgang konfiguriert und auf LOW ist.
     // Dies ist entscheidend, um zu verhindern, dass die NeoPixel-LED zu Weiß glitcht.
     pinMode(_sharedPin, OUTPUT);
@@ -47,15 +82,15 @@ void ESP32C3LEDManager::_activateBlueLEDMode() {
     delay(50); // Kurze Verzögerung, damit sich der Pin-Zustand stabilisiert.
 
     // LEDC-Peripherie an den Pin anhängen (konfiguriert den Pin für PWM).
-    ledcAttach(_sharedPin, _blueLEDFreq, _blueLEDResolution);
+    _ledcAttachBlue();
 }
 
 // Interne Helferfunktion: Räumt nach blauen LED (LEDC)-Operationen auf und bereitet für NeoPixel vor
 void ESP32C3LEDManager::_deactivateBlueLEDMode() {
     // Sicherstellen, dass die blaue LED über LEDC ausgeschaltet ist.
-    ledcWrite(_sharedPin, 0); // 0 = AUS für nicht-invertierte blaue LED.
+    _ledcWriteBlue(0); // 0 = AUS für nicht-invertierte blaue LED.
     // LEDC-Peripherie vom Pin trennen.
-    ledcDetach(_sharedPin);
+    _ledcDetachBlue();
 
     // Den Pin sofort wieder für NeoPixel-Operationen vorbereiten und NeoPixel ausschalten.
     _activateNeoPixelMode();
@@ -66,29 +101,29 @@ void ESP32C3LEDManager::_deactivateBlueLEDMode() {
 // --- Implementierung der Funktionen zur Steuerung der blauen LED ---
 void ESP32C3LEDManager::blueLEDOn() {
     _activateBlueLEDMode();
-    ledcWrite(_sharedPin, _blueLEDMaxBrightness); // Einschalten auf maximale sichere Helligkeit.
+    _ledcWriteBlue(_blueLEDMaxBrightness); // Einschalten auf maximale sichere Helligkeit.
 }
 
 void ESP32C3LEDManager::blueLEDOff() {
     _activateBlueLEDMode(); // LEDC anhängen, um über PWM auszuschalten.
-    ledcWrite(_sharedPin, 0); // Ausschalten.
+    _ledcWriteBlue(0); // Ausschalten.
     _deactivateBlueLEDMode(); // LEDC trennen und für NeoPixel vorbereiten.
 }
 
 void ESP32C3LEDManager::blueLEDToggle() {
     _activateBlueLEDMode();
     // Aktuellen Duty Cycle lesen. Wenn 0 (aus), einschalten. Sonst ausschalten.
-    if (ledcRead(_sharedPin) == 0) {
-        ledcWrite(_sharedPin, _blueLEDMaxBrightness);
+    if (_ledcReadBlue() == 0) {
+        _ledcWriteBlue(_blueLEDMaxBrightness);
     } else {
-        ledcWrite(_sharedPin, 0);
+        _ledcWriteBlue(0);
         _deactivateBlueLEDMode(); // Wenn ausgeschaltet wird, aufräumen.
     }
 }
 
 void ESP32C3LEDManager::blueLEDFade(int targetBrightness, int durationMs) {
     _activateBlueLEDMode();
-    int currentBrightness = ledcRead(_sharedPin); // Aktuelle Helligkeit abrufen.
+    int currentBrightness = _ledcReadBlue(); // Aktuelle Helligkeit abrufen.
     // Sicherstellen, dass die Zielhelligkeit innerhalb der sicheren Grenzen liegt.
     if (targetBrightness > _blueLEDMaxBrightness) targetBrightness = _blueLEDMaxBrightness;
     if (targetBrightness < 0) targetBrightness = 0;
@@ -103,12 +138,12 @@ void ESP32C3LEDManager::blueLEDFade(int targetBrightness, int durationMs) {
 
     if (targetBrightness > currentBrightness) {
         for (int brightness = currentBrightness; brightness <= targetBrightness; brightness++) {
-            ledcWrite(_sharedPin, brightness);
+            _ledcWriteBlue(brightness);
             delay(delayPerStep);
         }
     } else {
         for (int brightness = currentBrightness; brightness >= targetBrightness; brightness--) {
-            ledcWrite(_sharedPin, brightness);
+            _ledcWriteBlue(brightness);
             delay(delayPerStep);
         }
     }
@@ -125,10 +160,10 @@ void ESP32C3LEDManager::blueLEDSquareWave(int frequencyHz, int durationMs) {
     unsigned long halfPeriodMs = 1000 / (2 * frequencyHz); // Halbe Periode für AN/AUS.
 
     while (millis() < endTime) {
-        ledcWrite(_sharedPin, _blueLEDMaxBrightness); // AN
+        _ledcWriteBlue(_blueLEDMaxBrightness); // AN
         delay(halfPeriodMs);
         if (millis() >= endTime) break; // Prüfen, ob Dauer während AN-Zustand abgelaufen ist.
-        ledcWrite(_sharedPin, 0); // AUS
+        _ledcWriteBlue(0); // AUS
         delay(halfPeriodMs);
     }
     _deactivateBlueLEDMode(); // Sicherstellen, dass LED aus ist und aufräumen.

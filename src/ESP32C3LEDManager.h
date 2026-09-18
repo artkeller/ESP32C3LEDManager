@@ -3,6 +3,20 @@
 
 #include <Adafruit_NeoPixel.h>
 #include <Arduino.h> // Für uint8_t, uint16_t, etc.
+#include <esp_arduino_version.h> // Für ESP_ARDUINO_VERSION_VAL() -> LEDC-API-Weiche
+
+// Arduino-ESP32 Core 3.0.0 (ESP-IDF 5.1) hat die LEDC-API grundlegend umgebaut:
+// alt (Core < 3.0):  ledcSetup(channel, freq, res) + ledcAttachPin(pin, channel)
+//                     ledcWrite(channel, duty) / ledcRead(channel) / ledcDetachPin(pin)
+// neu (Core >= 3.0): ledcAttach(pin, freq, res) — Kanal wird intern vom Peripheral
+//                     Manager vergeben — ledcWrite(pin, duty) / ledcRead(pin) / ledcDetach(pin)
+// Siehe PLATFORMIO.md für den Hintergrund (u. a. relevant, weil das offizielle
+// PlatformIO-Registry-Package "espressif32" noch auf Core 2.x hängt).
+#if ESP_ARDUINO_VERSION >= ESP_ARDUINO_VERSION_VAL(3, 0, 0)
+    #define ESP32C3LEDMANAGER_NEW_LEDC_API 1
+#else
+    #define ESP32C3LEDMANAGER_NEW_LEDC_API 0
+#endif
 
 class ESP32C3LEDManager {
 public:
@@ -57,6 +71,21 @@ private:
     const int _blueLEDResolution = 8;  // 8-Bit-Auflösung (Werte von 0 bis 255)
     // Maximale Helligkeit für die blaue LED, um NeoPixel-Trigger zu vermeiden
     const int _blueLEDMaxBrightness = 240;
+#if !ESP32C3LEDMANAGER_NEW_LEDC_API
+    // Nur für die alte, kanalbasierte LEDC-API (Core < 3.0) benötigt.
+    // Fest belegt, da dieser Manager exakt einen PWM-Pin verwaltet.
+    static const int _blueLEDChannel = 0;
+#endif
+
+    // LEDC-Zugriffe hinter diesen vier Helfern gekapselt, damit der Rest der
+    // Klasse (blueLEDOn/Off/Fade/...) unverändert bleibt, egal welche Core-
+    // Version (Arduino-IDE >=3.0 oder z.B. PlatformIO-Standard <3.0) zum
+    // Einsatz kommt. Implementierung je nach ESP32C3LEDMANAGER_NEW_LEDC_API
+    // in ESP32C3LEDManager.cpp.
+    void _ledcAttachBlue();
+    void _ledcWriteBlue(uint32_t duty);
+    uint32_t _ledcReadBlue();
+    void _ledcDetachBlue();
 
     // Interne Helferfunktionen zur Verwaltung des gemeinsamen Pins
     // Bereitet den Pin für NeoPixel-Operationen vor (aktiviert RMT, deaktiviert LEDC).
