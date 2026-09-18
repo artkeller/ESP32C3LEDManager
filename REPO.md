@@ -1,91 +1,97 @@
-# Repo-Struktur
+# Repo structure
 
-Dieses Repository ist gleichzeitig eine **Arduino-Bibliothek** (erkennbar an
-`library.properties` im Root) und, seit dem PlatformIO-Fix aus Issue #1, auch
-direkt mit **PlatformIO** baubar (erkennbar an den `platformio.ini`-Dateien).
-Beide Werkzeuge verstehen dasselbe `src/`-Layout, es gibt also keinen
-Code-Fork zwischen den beiden Ökosystemen.
+This repository is both an **Arduino library** (identifiable by
+`library.properties` in the root) and, since the PlatformIO fix from
+Issue #1, also directly buildable with **PlatformIO** (identifiable by the
+`platformio.ini` files). Both toolchains understand the same `src/` layout,
+so there is no code fork between the two ecosystems.
 
 ```
 ESP32C3LEDManager/
-├── library.properties          Arduino-Bibliotheks-Manifest (Name, Version,
-│                                Abhängigkeiten, Kategorie). Wird sowohl vom
-│                                Arduino Library Manager als auch von
-│                                PlatformIOs Library-Dependency-Finder
-│                                gelesen/respektiert.
-├── platformio.ini               [NEU] Root-Projektkonfiguration für
-│                                PlatformIO. "pio run" hier im Repo-Root
-│                                baut standardmäßig examples/BasicDemo, mit
-│                                zwei Environments core3/core2 (s.
-│                                PLATFORMIO.md). Für Arduino-IDE-Nutzer ohne
-│                                Bedeutung — ignoriert sie einfach.
-├── .gitignore                   [NEU] Ignoriert PlatformIO-Build-Artefakte
+├── library.properties          Arduino library manifest (name, version,
+│                                dependencies, category). Read and respected
+│                                by both the Arduino Library Manager and
+│                                PlatformIO's Library Dependency Finder.
+│                                Version bumped to 0.5.1 for this fix.
+├── platformio.ini               [NEW] Root project configuration for
+│                                PlatformIO. Running "pio run" here in the
+│                                repo root builds examples/BasicDemo by
+│                                default, with two environments core3/core2
+│                                (see PLATFORMIO.md). Irrelevant to
+│                                Arduino IDE users — simply ignored there.
+├── .gitignore                   [NEW] Ignores PlatformIO build artifacts
 │                                (.pio/, .pioenvs/, .piolibdeps/, …).
-├── README.md                    Haupt-Dokumentation: Motivation, Hardware-
-│                                Hintergrund (geteilter GPIO8), Installation,
-│                                API-Übersicht.
-├── PLATFORMIO.md                [NEU] Ausführlicher Hintergrund zu Issue #1:
-│                                warum der LEDC-API-Wechsel in Arduino-ESP32
-│                                3.0 PlatformIO-Nutzer betrifft, warum der im
-│                                Issue vorgeschlagene Macro-Workaround nicht
-│                                korrekt ist, und wie die Bibliothek das jetzt
-│                                automatisch über beide Core-Generationen
-│                                hinweg löst.
-├── REPO.md                      [NEU] Diese Datei.
-├── LICENSE                      Lizenztext.
-├── CRA-EXEMPTION.md             Einordnung zum EU Cyber Resilience Act
-│                                (reine Open-Source-Bibliothek).
+├── README.md                    Main documentation: motivation, hardware
+│                                background (shared GPIO8), installation,
+│                                API overview. Release badge bumped to
+│                                v0.5.1.
+├── PLATFORMIO.md                [NEW] Detailed background on Issue #1: why
+│                                the LEDC API change in Arduino-ESP32 3.0
+│                                affects PlatformIO users, why the macro
+│                                workaround suggested in the issue is not
+│                                correct, and how the library now resolves
+│                                this automatically across both core
+│                                generations.
+├── REPO.md                      [NEW] This file.
+├── LICENSE                      License text.
+├── CRA-EXEMPTION.md             Note on the EU Cyber Resilience Act (pure
+│                                open-source library).
 │
-├── src/                         Eigentlicher Bibliothekscode — von Arduino
-│   │                            IDE und PlatformIO gleichermaßen als
-│   │                            "src"-Ordner der Bibliothek erkannt.
-│   ├── ESP32C3LEDManager.h      Klassendeklaration. [GEÄNDERT für Issue #1]
-│   │                            Enthält jetzt die Compile-Zeit-Weiche
-│   │                            ESP32C3LEDMANAGER_NEW_LEDC_API (auf Basis
-│   │                            von esp_arduino_version.h) sowie die vier
-│   │                            privaten LEDC-Wrapper-Methoden.
-│   └── ESP32C3LEDManager.cpp    Implementierung. [GEÄNDERT für Issue #1]
-│                                Alle direkten ledcAttach/ledcWrite/ledcRead/
-│                                ledcDetach-Aufrufe laufen jetzt über die vier
-│                                Wrapper, die je nach Core-Version die neue
-│                                (pinbasierte) oder alte (kanalbasierte)
-│                                LEDC-API ansprechen.
+├── src/                         The actual library code — recognized as
+│   │                            the library's "src" folder by both the
+│   │                            Arduino IDE and PlatformIO.
+│   ├── ESP32C3LEDManager.h      Class declaration. [CHANGED for Issue #1]
+│   │                            Now contains the compile-time switch
+│   │                            ESP32C3LEDMANAGER_NEW_LEDC_API (based on
+│   │                            esp_arduino_version.h) plus the four
+│   │                            private LEDC wrapper methods. Comments
+│   │                            translated to English; logic unchanged.
+│   └── ESP32C3LEDManager.cpp    Implementation. [CHANGED for Issue #1]
+│                                All direct ledcAttach/ledcWrite/ledcRead/
+│                                ledcDetach calls now go through the four
+│                                wrappers, which address the new (pin-based)
+│                                or old (channel-based) LEDC API depending
+│                                on the core version. Comments translated to
+│                                English; logic unchanged.
 │
 ├── examples/
 │   ├── BasicDemo/
-│   │   ├── BasicDemo.ino         Einfaches Demo-Sketch (Arduino-IDE-Format,
-│   │   │                          unverändert).
-│   │   └── platformio.ini        [NEU] Eigenständiges PlatformIO-Projekt für
-│   │                              genau dieses Beispiel; zieht die Bibliothek
-│   │                              per "symlink://../.." aus dem Repo-Root.
-│   │                              Environments core3 / core2, siehe
-│   │                              PLATFORMIO.md.
+│   │   ├── BasicDemo.ino         Simple demo sketch (Arduino IDE format,
+│   │   │                          unchanged).
+│   │   └── platformio.ini        [NEW] Self-contained PlatformIO project
+│   │                              for this specific example; pulls the
+│   │                              library from the repo root via
+│   │                              "symlink://../..". Environments core3 /
+│   │                              core2, see PLATFORMIO.md.
 │   └── FullDemo/
-│       ├── FullDemo.ino          Umfangreicheres Demo-Sketch (Arduino-IDE-
-│       │                          Format, unverändert).
-│       └── platformio.ini        [NEU] Wie oben, für FullDemo.ino.
+│       ├── FullDemo.ino          More extensive demo sketch (Arduino IDE
+│       │                          format, unchanged).
+│       └── platformio.ini        [NEW] Same as above, for FullDemo.ino.
 │
-└── images/                      Timing-Diagramme und Board-Fotos, referenziert
-                                  aus README.md (unverändert).
+└── images/                      Timing diagrams and board photos, referenced
+                                  from README.md (unchanged).
 ```
 
-## Wie man das Repo nutzt
+## How to use this repo
 
-**Als Arduino-Bibliothek (unverändert):** ZIP herunterladen bzw. Repo klonen,
-in der Arduino IDE über *Sketch → Include Library → Add .ZIP Library…*
-einbinden (oder den Ordner direkt in `~/Arduino/libraries/` ablegen). Die
-neuen PlatformIO-Dateien (`platformio.ini`, `PLATFORMIO.md`, `REPO.md`,
-`.gitignore`) stören hier nicht — die Arduino IDE ignoriert sie.
+**As an Arduino library (unchanged):** download the ZIP or clone the repo,
+then import it in the Arduino IDE via *Sketch → Include Library → Add .ZIP
+Library…* (or drop the folder directly into `~/Arduino/libraries/`). The new
+PlatformIO files (`platformio.ini`, `PLATFORMIO.md`, `REPO.md`, `.gitignore`)
+don't get in the way here — the Arduino IDE simply ignores them.
 
-**Als PlatformIO-Bibliothek/-Projekt (neu, Issue #1):** entweder
+**As a PlatformIO library/project (new, Issue #1):** either
 
-- `pio run -e core3` bzw. `-e core2` direkt im Repo-Root (baut `BasicDemo`),
-  oder
-- in `examples/BasicDemo/` bzw. `examples/FullDemo/` wechseln und dort
-  `pio run -e core3` / `-e core2` ausführen, oder
-- die Bibliothek als Abhängigkeit in einem eigenen PlatformIO-Projekt
-  einbinden (`lib_deps = https://github.com/artkeller/ESP32C3LEDManager.git`).
+- run `pio run -e core3` or `-e core2` directly in the repo root (builds
+  `BasicDemo`), or
+- switch into `examples/BasicDemo/` or `examples/FullDemo/` and run
+  `pio run -e core3` / `-e core2` there, or
+- include the library as a dependency in your own PlatformIO project
+  (`lib_deps = https://github.com/artkeller/ESP32C3LEDManager.git`).
 
-Details zu den beiden Environments (`core3` = moderner Core via
-pioarduino-Fork, `core2` = aktueller offizieller PlatformIO-Registry-Stand)
-stehen in [PLATFORMIO.md](PLATFORMIO.md).
+Details on the two environments (`core3` = modern core via the pioarduino
+fork, `core2` = current official PlatformIO Registry state) are in
+[PLATFORMIO.md](PLATFORMIO.md).
+
+---
+Written for **ESP32C3LEDManager v0.5.1**.
