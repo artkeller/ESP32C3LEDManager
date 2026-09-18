@@ -28,7 +28,7 @@ parameter was simply commented out:
 ledcAttach(_sharedPin, _blueLEDFreq); //, _blueLEDResolution);
 ```
 
-That silences the compiler — but, as explained below, it is **not a correct
+That silences the compiler - but, as explained below, it is **not a correct
 fix**, just an accidentally-compiling patch over the symptom.
 
 ## 2. The actual root cause: the LEDC API overhaul in Arduino-ESP32 3.0
@@ -53,11 +53,11 @@ Specifically:
 
 All addressing in the new API happens **through the pin**, not through a
 manually managed channel number anymore. `ledcSetup` and `ledcAttachPin` were
-removed entirely (not just renamed) — which is why a sketch built against the
+removed entirely (not just renamed) - which is why a sketch built against the
 old API fails to compile under Core ≥ 3.0 with
 `'ledcSetup' was not declared in this scope`, and conversely a sketch using
 the new API (like this library's original code) fails under Core < 3.0 with
-`'ledcAttach' was not declared in this scope` — exactly the picture from
+`'ledcAttach' was not declared in this scope` - exactly the picture from
 Issue #1.
 
 ## 3. Why this specifically shows up under PlatformIO
@@ -65,7 +65,7 @@ Issue #1.
 This library's original code already used the **new**, pin-based API
 (`ledcAttach(_sharedPin, _blueLEDFreq, _blueLEDResolution)` etc.). That works
 fine as long as an ESP32 board package ≥ 3.0.0 is installed in the Arduino
-IDE — which is standard practice via the Boards Manager by now.
+IDE - which is standard practice via the Boards Manager by now.
 
 Under PlatformIO the situation differs: the **official**
 [`platformio/platform-espressif32`](https://github.com/platformio/platform-espressif32)
@@ -84,7 +84,7 @@ has established itself as the replacement, shipping current Arduino-ESP32
 releases (3.x) as ready-to-use packages.
 
 **In short:** anyone writing `platform = espressif32` (the default/official
-registry) currently gets a core < 3.0 and therefore the *old* LEDC API —
+registry) currently gets a core < 3.0 and therefore the *old* LEDC API -
 exactly the combination under which @spethwa hit the error.
 
 ## 4. Why the quick fix from the issue doesn't actually work
@@ -97,7 +97,7 @@ ledcAttach(_sharedPin, _blueLEDFreq); //, _blueLEDResolution);
 ```
 
 expands to `ledcAttachPin(_sharedPin, _blueLEDFreq)`. But the old API's
-signature is `ledcAttachPin(uint8_t pin, uint8_t channel)` — the second
+signature is `ledcAttachPin(uint8_t pin, uint8_t channel)` - the second
 parameter is a **channel number**, not a frequency! The code only compiles
 because `_blueLEDFreq` (value `1000`) is, to the compiler, just a plain `int`
 that gets silently truncated to `uint8_t channel` (with overflow:
@@ -106,7 +106,7 @@ that gets silently truncated to `uint8_t channel` (with overflow:
 preceding `ledcSetup(channel, freq, resolution)` call, the PWM
 frequency/resolution for that channel is never configured. So the blue LED's
 fading and square-wave behavior with this workaround, if it worked at all,
-would only have done so by accident or with the wrong frequency/resolution —
+would only have done so by accident or with the wrong frequency/resolution -
 a classic "compiles, but doesn't do what you'd expect" case.
 
 ## 5. The fix in this repository: a version switch instead of a macro hack
@@ -131,13 +131,13 @@ Four small private helper methods (`_ledcAttachBlue()`, `_ledcWriteBlue()`,
 `_ledcReadBlue()`, `_ledcDetachBlue()`) encapsulate the actual LEDC calls;
 the rest of the class's code (`blueLEDOn()`, `blueLEDFade()`,
 `blueLEDSquareWave()`, etc.) is left unchanged and now only calls these
-wrappers. In `ESP32C3LEDManager.cpp` each wrapper has two implementations —
+wrappers. In `ESP32C3LEDManager.cpp` each wrapper has two implementations -
 one for `ESP32C3LEDMANAGER_NEW_LEDC_API == 1` (pin-based, see section 2,
 right column) and one for `== 0` (channel-based, left column, with a fixed
 `_blueLEDChannel = 0`).
 
 **Result:** the same, unmodified source code compiles both with a modern
-Arduino IDE core ≥ 3.0 and with the current PlatformIO default core 2.x —
+Arduino IDE core ≥ 3.0 and with the current PlatformIO default core 2.x -
 with no macro redefinition and none of the parameter mix-up described in the
 issue.
 
@@ -156,7 +156,7 @@ pio run -e core2
 ```
 
 Both environments target `board = esp32-c3-devkitm-1` (a generic ESP32-C3
-devkit definition — there is no dedicated board entry for the SuperMini /
+devkit definition - there is no dedicated board entry for the SuperMini /
 SuperMini Plus; the generic definition matches electrically). If you'd like
 to pin the core to ≥ 3.0 project-wide in your own `platformio.ini`, add:
 
@@ -164,7 +164,7 @@ to pin the core to ≥ 3.0 project-wide in your own `platformio.ini`, add:
 platform = https://github.com/pioarduino/platform-espressif32/releases/download/51.03.03/platform-espressif32.zip
 ```
 
-(this pioarduino release bundles Arduino-ESP32 3.0.3 / ESP-IDF 5.1 — the
+(this pioarduino release bundles Arduino-ESP32 3.0.3 / ESP-IDF 5.1 - the
 version current at the time of writing this doc; check the
 [pioarduino releases](https://github.com/pioarduino/platform-espressif32/releases)
 for anything newer).
@@ -177,15 +177,15 @@ the sketch. Anyone who, under an old core, also uses LEDC channels themselves
 (e.g. for a motor or a buzzer) and happens to occupy channel 0 as well will
 hit a collision. A possible future enhancement would be to expose the
 channel number as an optional constructor parameter (relevant only for
-Core < 3.0) — deliberately not included in this bugfix PR, to keep the diff
+Core < 3.0) - deliberately not included in this bugfix PR, to keep the diff
 small and focused on Issue #1.
 
 ## Sources
 
 - Espressif, [Migration Guide 2.x → 3.0, LEDC section](https://github.com/espressif/arduino-esp32/blob/master/docs/source/migration_guides/2.x_to_3.0.rst)
-- [espressif/arduino-esp32 Issue #9510](https://github.com/espressif/arduino-esp32/issues/9510) and [#10309](https://github.com/espressif/arduino-esp32/issues/10309) — examples of `'ledcSetup' was not declared` after upgrading to core 3.x (the reverse direction of the problem described here, confirming the same API boundary)
-- [espressif/arduino-esp32 Discussion #10039](https://github.com/espressif/arduino-esp32/discussions/10039) and [platformio/platform-espressif32 Issue #1225](https://github.com/platformio/platform-espressif32/issues/1225) — the stall in official PlatformIO Registry support for Arduino-ESP32 ≥ 3.0
-- [pioarduino/platform-espressif32](https://github.com/pioarduino/platform-espressif32) — community fork with current core releases
+- [espressif/arduino-esp32 Issue #9510](https://github.com/espressif/arduino-esp32/issues/9510) and [#10309](https://github.com/espressif/arduino-esp32/issues/10309) - examples of `'ledcSetup' was not declared` after upgrading to core 3.x (the reverse direction of the problem described here, confirming the same API boundary)
+- [espressif/arduino-esp32 Discussion #10039](https://github.com/espressif/arduino-esp32/discussions/10039) and [platformio/platform-espressif32 Issue #1225](https://github.com/platformio/platform-espressif32/issues/1225) - the stall in official PlatformIO Registry support for Arduino-ESP32 ≥ 3.0
+- [pioarduino/platform-espressif32](https://github.com/pioarduino/platform-espressif32) - community fork with current core releases
 
 ---
 Written for **ESP32C3LEDManager v0.5.1**.
