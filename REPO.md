@@ -18,7 +18,7 @@ ESP32C3LEDManager/
 │                                repo root builds examples/BasicDemo by
 │                                default, with two environments core3/core2
 │                                (see PLATFORMIO.md). Irrelevant to
-│                                Arduino IDE users — simply ignored there.
+│                                Arduino IDE users - simply ignored there.
 ├── .gitignore                   [NEW] Ignores PlatformIO build artifacts
 │                                (.pio/, .pioenvs/, .piolibdeps/, …).
 ├── README.md                    Main documentation: motivation, hardware
@@ -37,7 +37,7 @@ ESP32C3LEDManager/
 ├── CRA-EXEMPTION.md             Note on the EU Cyber Resilience Act (pure
 │                                open-source library).
 │
-├── src/                         The actual library code — recognized as
+├── src/                         The actual library code - recognized as
 │   │                            the library's "src" folder by both the
 │   │                            Arduino IDE and PlatformIO.
 │   ├── ESP32C3LEDManager.h      Class declaration. [CHANGED for Issue #1]
