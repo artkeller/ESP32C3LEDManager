@@ -45,7 +45,7 @@ Specifically:
 
 | | **Core < 3.0** (ESP-IDF 4.x, "old", *channel-based*) | **Core ≥ 3.0** (ESP-IDF 5.x, "new", *pin-based*) |
 |---|---|---|
-| Reserve + configure a channel | `ledcSetup(channel, freq, resolution)` | *not needed – handled automatically by the Peripheral Manager* |
+| Reserve + configure a channel | `ledcSetup(channel, freq, resolution)` | *not needed - handled automatically by the Peripheral Manager* |
 | Attach to a pin | `ledcAttachPin(pin, channel)` | `ledcAttach(pin, freq, resolution)` *(merges both steps)* |
 | Write PWM value | `ledcWrite(channel, duty)` | `ledcWrite(pin, duty)` |
 | Read PWM value | `ledcRead(channel)` | `ledcRead(pin)` |
