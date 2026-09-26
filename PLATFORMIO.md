@@ -3,7 +3,7 @@
 > **Honest disclaimer up front:** This library was developed and tested
 > exclusively in the Arduino IDE so far. The fix described in this document
 > was carefully derived from Espressif's official migration documentation
-> and several verified GitHub issues, and it is internally consistent — but
+> and several verified GitHub issues, and it is internally consistent - but
 > it has **not** been verified by an actual `pio run` in a reference
 > environment ("flying blind"). Please have the issue reporter (or
 > yourselves) build both environments from `platformio.ini` (`core3` and
