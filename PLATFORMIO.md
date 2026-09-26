@@ -102,7 +102,7 @@ parameter is a **channel number**, not a frequency! The code only compiles
 because `_blueLEDFreq` (value `1000`) is, to the compiler, just a plain `int`
 that gets silently truncated to `uint8_t channel` (with overflow:
 `1000 % 256 = 232`). The ESP32-C3, however, only has **6 LEDC channels
-(0–5)** — channel 232 simply doesn't exist. On top of that, without the
+(0–5)** - channel 232 simply doesn't exist. On top of that, without the
 preceding `ledcSetup(channel, freq, resolution)` call, the PWM
 frequency/resolution for that channel is never configured. So the blue LED's
 fading and square-wave behavior with this workaround, if it worked at all,
