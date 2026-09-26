@@ -78,7 +78,7 @@ ESP32C3LEDManager/
 then import it in the Arduino IDE via *Sketch → Include Library → Add .ZIP
 Library…* (or drop the folder directly into `~/Arduino/libraries/`). The new
 PlatformIO files (`platformio.ini`, `PLATFORMIO.md`, `REPO.md`, `.gitignore`)
-don't get in the way here — the Arduino IDE simply ignores them.
+don't get in the way here - the Arduino IDE simply ignores them.
 
 **As a PlatformIO library/project (new, Issue #1):** either
 
