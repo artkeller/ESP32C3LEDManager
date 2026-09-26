@@ -13,40 +13,40 @@ ESP32C3LEDManager/
 │                                by both the Arduino Library Manager and
 │                                PlatformIO's Library Dependency Finder.
 │                                Version bumped to 0.5.1 for this fix.
-├── platformio.ini               [NEW] Root project configuration for
+├── platformio.ini              [NEW] Root project configuration for
 │                                PlatformIO. Running "pio run" here in the
 │                                repo root builds examples/BasicDemo by
 │                                default, with two environments core3/core2
 │                                (see PLATFORMIO.md). Irrelevant to
 │                                Arduino IDE users - simply ignored there.
-├── .gitignore                   [NEW] Ignores PlatformIO build artifacts
+├── .gitignore                  [NEW] Ignores PlatformIO build artifacts
 │                                (.pio/, .pioenvs/, .piolibdeps/, …).
-├── README.md                    Main documentation: motivation, hardware
+├── README.md                   Main documentation: motivation, hardware
 │                                background (shared GPIO8), installation,
 │                                API overview. Release badge bumped to
 │                                v0.5.1.
-├── PLATFORMIO.md                [NEW] Detailed background on Issue #1: why
+├── PLATFORMIO.md               [NEW] Detailed background on Issue #1: why
 │                                the LEDC API change in Arduino-ESP32 3.0
 │                                affects PlatformIO users, why the macro
 │                                workaround suggested in the issue is not
 │                                correct, and how the library now resolves
 │                                this automatically across both core
 │                                generations.
-├── REPO.md                      [NEW] This file.
-├── LICENSE                      License text.
-├── CRA-EXEMPTION.md             Note on the EU Cyber Resilience Act (pure
+├── REPO.md                     [NEW] This file.
+├── LICENSE                     License text.
+├── CRA-EXEMPTION.md            Note on the EU Cyber Resilience Act (pure
 │                                open-source library).
 │
-├── src/                         The actual library code - recognized as
+├── src/                        The actual library code - recognized as
 │   │                            the library's "src" folder by both the
 │   │                            Arduino IDE and PlatformIO.
-│   ├── ESP32C3LEDManager.h      Class declaration. [CHANGED for Issue #1]
+│   ├── ESP32C3LEDManager.h     Class declaration. [CHANGED for Issue #1]
 │   │                            Now contains the compile-time switch
 │   │                            ESP32C3LEDMANAGER_NEW_LEDC_API (based on
 │   │                            esp_arduino_version.h) plus the four
 │   │                            private LEDC wrapper methods. Comments
 │   │                            translated to English; logic unchanged.
-│   └── ESP32C3LEDManager.cpp    Implementation. [CHANGED for Issue #1]
+│   └── ESP32C3LEDManager.cpp   Implementation. [CHANGED for Issue #1]
 │                                All direct ledcAttach/ledcWrite/ledcRead/
 │                                ledcDetach calls now go through the four
 │                                wrappers, which address the new (pin-based)
